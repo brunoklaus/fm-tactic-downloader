@@ -24,8 +24,7 @@ args = parser.parse_args()
 # Read DataFrame
 df = pd.read_csv(args.input)
 df['filename'] = [x.split('/')[-1] + '.FMF' for x in df['tactic_href'].values]
-print(df['filename'][df.filename.duplicated(keep=False)])
-raise ''
+
 import os.path as osp
 import os
 import concurrent.futures

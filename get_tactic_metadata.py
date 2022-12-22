@@ -17,8 +17,8 @@ import pandas as pd
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Given the links to FMBase tactics, extract all the metadata and download all tactics.')
-parser.add_argument('--input', help='Path to input text file, each line is a link to an FMBase tactic')
-parser.add_argument('--output', help='which folder to save into')
+parser.add_argument('--input', help='Path to input text file, each line is a link to an FMBase tactic', required=True)
+parser.add_argument('--output', help='which folder to save into', required=True)
 args = parser.parse_args()
 
 def fmbase_stat_generator(driver, page):
@@ -74,6 +74,8 @@ for href in tactic_hrefs:
                                         find_element(By.XPATH,"./following-sibling::div").text
     # Append to list
     all_dicts.append(tactic_dct)
+    print("Scraped ", href)
+
 
 # Create DataFrame with pandas, save to CSV
 pd.DataFrame.from_records(all_dicts).to_csv(osp.join(args.output, 'metadata.csv'))

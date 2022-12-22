@@ -13,8 +13,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Get the list of links to all tactics listed on FMBase Tactic Tester page.')
-parser.add_argument('--link', help='Link to FMBase Tactic Tester page')
-parser.add_argument('--output', help='Path to be created for the output file')
+parser.add_argument('--link', help='Link to FMBase Tactic Tester page', required=True)
+parser.add_argument('--output', help='Path to be created for the output txt file', required=True)
 args = parser.parse_args()
 
 def fmbase_page_generator(driver, page):
@@ -60,5 +60,9 @@ for i, page in enumerate(fmbase_page_generator(driver,args.link)):
     # Add link to each tactic
     tactic_hrefs += [x.get_attribute('href') for x in driver.find_elements(By.XPATH,"//a[text()='Show tactic']")]
 
+import os
+import os.path as osp
+
+os.makedirs(osp.dirname(args.output), exist_ok=True)
 with open(args.output, 'w') as f:
     f.write('\n'.join(tactic_hrefs))

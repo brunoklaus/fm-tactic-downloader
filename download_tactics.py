@@ -17,8 +17,8 @@ import pandas as pd
 
 # Parse Arguments
 parser = argparse.ArgumentParser(description='Given the links to FMBase tactics, extract all the metadata and download all tactics.')
-parser.add_argument('--input', help='Path to input CSV file storing tactic metadata')
-parser.add_argument('--output', help='which folder to save into')
+parser.add_argument('--input', help='Path to input CSV file storing tactic metadata', required=True)
+parser.add_argument('--output', help='which folder to save into', required=True)
 args = parser.parse_args()
 
 # Read DataFrame
@@ -38,10 +38,10 @@ def download_from_url(url, download_path):
             handle.write(block)
 
 import requests
-os.makedirs(osp.join(args.output,'tactics'),exist_ok=True)
+os.makedirs(osp.join(args.output,'download'),exist_ok=True)
 
 def download_file(fname, download_link):
-    fname = osp.join(args.output,'tactics',fname)
+    fname = osp.join(args.output,'download',fname)
     if not osp.isfile(fname):
         download_from_url(download_link, fname)
 
